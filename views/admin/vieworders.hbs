@@ -1,0 +1,77 @@
+<div class="container">
+
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3 class="panel-title">List of Orders</h3></div>
+    <div class="panel-body">
+      <table id="orderMap" class="table">
+        <thead>
+        <tr>
+          <th></th>
+          <th >Created</th>
+          <th >Customer</th>
+          <th>Description</th>
+          <th>Total Quantity</th>
+          <th>Total Price</th>
+          <th>Instructions</th>
+          <th >Status</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {{# each orderMap }}
+        <tr>
+          <td></td>
+          <td>{{this.date}}<br/>
+              {{this.time}}
+          </td>
+          <td>
+            <strong>{{this.name}}</strong><br/>
+            {{this.address}}<br/>
+            {{this.paymentId}}
+          </td>
+
+          <td>
+          {{# each this.cart.items }}
+          {{ this.qty }} x <span class="badge"> ₹ {{ this.price }}</span> : <strong>{{ this.item.title }}</strong>  <br/>
+          {{/each}}
+          </td>
+
+          <td>{{this.cart.totalQty}}</td>
+
+          <td> ₹ {{this.cart.totalPrice}}</td>
+          <td> {{this.cart.instructions}}</td>
+
+          <td>
+            {{# if this.preparing }}
+              <i class="fas fa-spinner"></i>
+              <span class="label label-default">Preparing</span>
+            {{/if}}
+
+            {{# if this.ontheway }}
+              <i class="fas fa-motorcycle"></i>
+              <span class="label label-primary">On the Way</span>
+            {{/if}}
+
+            {{# if this.delivered }}
+              <i class="fas fa-check"></i>
+              <span class="label label-success">Delivered</span>
+            {{/if}}
+          </td>
+
+          <td>
+            <a href="remove-order/{{this._id}}" class="delete btn btn-danger" role="button">Delete</a> <br/>
+            <a href="ontheway-order/{{this._id}}" class="view btn btn-primary " role="button">On the Way</a><br/>
+            <a href="delivered-order/{{this._id}}" class="process btn btn-success " role="button">Delivered</a>
+          </td>
+        </tr>
+
+        {{/each}}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
